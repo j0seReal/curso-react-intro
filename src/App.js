@@ -5,7 +5,6 @@ import { TodoItem } from './TodoItem';
 import { CreateTodoButton } from './CreateTodoButton';
 import logo from './platzi.webp';
 import  React from 'react'; 
-import './App.css';
 
 const defaultTodos = [
   { text: 'cortar cebolla', completed: false },
@@ -17,7 +16,7 @@ const defaultTodos = [
 function App() {
   return (
     <div className="App">
-      <React.Fragment>
+      <>
         <TodoCounter completed={16} total={25} />
         <TodoSearch />
 
@@ -33,7 +32,7 @@ function App() {
         </TodoList>
 
         <CreateTodoButton />
-      </React.Fragment>
+      </>
     </div>
   );
 }
