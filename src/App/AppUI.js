@@ -6,47 +6,45 @@ import { CreateTodoButton } from '../CreateTodoButton';
 import { TodosLoading } from '../TodosLoading';
 import { TodosError } from '../TodosError';
 import { EmptyTodos } from '../EmptyTodos';
+import { TodoCotext } from '../TodoContext';
 
-function AppUI({
-    loading,
-    error,
-    completedTodos,
-    totalTodos,
-    searchValue,
-    searchedTodos,
-    setSearchValue,
-    completeTodo,
-    deleteTodo
-}) {
+function AppUI() {
     return (
         <>
-        <TodoCounter 
-            completed={completedTodos} 
-            total={totalTodos} />
+            <TodoCounter />
 
-        <TodoSearch
-            searchValue={searchValue} setSearchValue={setSearchValue} />
+            <TodoSearch />
 
-        <TodoList>
-            {loading && (
-                <>
-                    <TodosLoading message={'Cargando...'}/>
-                    <TodosLoading />
-                    <TodosLoading />
-                </>)}
-            {error && <TodosError />}
-            {(!loading && searchedTodos.length === 0) && <EmptyTodos />}
-            {searchedTodos.map(todo => (
-            <TodoItem
-                key={todo.text}
-                text={todo.text}
-                completed={todo.completed}
-                onComplete={() => completeTodo(todo.text)}
-                onDelete={() => deleteTodo(todo.text)}
-            />
-            ))}
-        </TodoList>
-        
+        <TodoCotext.Consumer>
+            { ({
+                loading,
+                error,
+                searchedTodos,
+                completeTodo,
+                deleteTodo
+            }) => (
+                <TodoList>
+                    {loading && (
+                        <>
+                            <TodosLoading message={'Cargando...'}/>
+                            <TodosLoading />
+                            <TodosLoading />
+                        </>)}
+                    {error && <TodosError />}
+                    {(!loading && searchedTodos.length === 0) && <EmptyTodos />}
+                    {searchedTodos.map(todo => (
+                    <TodoItem
+                        key={todo.text}
+                        text={todo.text}
+                        completed={todo.completed}
+                        onComplete={() => completeTodo(todo.text)}
+                        onDelete={() => deleteTodo(todo.text)}
+                    />
+                    ))}
+                </TodoList>
+            ) }
+        </TodoCotext.Consumer>
+
         <CreateTodoButton />
         </>
     );
