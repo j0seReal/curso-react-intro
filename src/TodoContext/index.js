@@ -17,7 +17,6 @@ function TodoProvider({ children }) {
       const totalTodos = todos.length;
     
     
-    
       const searchedTodos = todos.filter(
         (todo) => {
           const todoText = todo.text.toLocaleLowerCase();
@@ -25,6 +24,15 @@ function TodoProvider({ children }) {
           return todoText.includes(todoSearch);
         }
       );
+
+      const addTodo = (text) => {
+        const newTodos = [...todos];
+        newTodos.push({
+          text,
+          completed: false,
+        });
+        saveTodos(newTodos);
+      }
     
       const completeTodo = (text) => {
         const newTodos = [...todos];
@@ -56,7 +64,8 @@ function TodoProvider({ children }) {
             completeTodo,
             deleteTodo,
             openModal,
-            setOpenModal
+            setOpenModal,
+            addTodo
         }}>
             { children }
         </TodoContext.Provider>
